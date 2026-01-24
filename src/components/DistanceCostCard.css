@@ -1,0 +1,125 @@
+/* Distance and cost card styles */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.stat-item {
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.stat-item label {
+  display: block;
+  font-size: 0.7rem;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.stat-item p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+.stat-item.highlight {
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+  grid-column: span 2;
+}
+
+.stat-item.highlight p {
+  color: #c2410c;
+}
+
+.outline-btn {
+  background: white !important;
+  color: #1976d2 !important;
+  border: 1px solid #1976d2 !important;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.location-input-group {
+  margin-bottom: 20px;
+}
+
+.small-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.input-with-action {
+  display: flex;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.input-with-action input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.icon-btn {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1976d2;
+  padding: 4px;
+}
+
+.route-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.route-visual .line {
+  flex: 1;
+  height: 2px;
+  border-top: 2px dotted #cbd5e1;
+  margin: 0 10px;
+}
+
+.route-visual .dot {
+  width: 8px;
+  height: 8px;
+  background: #cbd5e1;
+  border-radius: 50%;
+}
+
+.route-visual .dot.destination { 
+  background: #ef4444; 
+}
+
+/* Animation for the 'Locate' button */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+  color: #94a3b8;
+}

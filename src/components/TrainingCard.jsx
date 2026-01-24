@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './TrainingCard.css';
 
 export default function TrainingCard() {
   const [isTraining, setIsTraining] = useState(false);

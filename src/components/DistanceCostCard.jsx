@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './DistanceCostCard.css';
 
 export default function DistanceCostCard() {
   const [origin, setOrigin] = useState("New York, USA");

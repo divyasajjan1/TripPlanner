@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './BulkUploadCard.css';
 
 export default function BulkUploadCard() {
   const [files, setFiles] = useState([]);

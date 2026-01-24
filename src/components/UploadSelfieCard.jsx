@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './UploadSelfieCard.css';
 
 export default function UploadSelfie() {
   const [selectedImage, setSelectedImage] = useState(null);

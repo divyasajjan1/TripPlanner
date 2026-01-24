@@ -1,0 +1,121 @@
+/* upload selfie card styles */
+
+/* --- UPLOAD ZONE & PREVIEW --- */
+.upload-zone {
+  width: 100%;
+  height: 150px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: #f8fafc;
+  transition: border-color 0.3s ease;
+}
+
+.upload-zone:hover {
+  border-color: #1976d2;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  color: #64748b;
+  gap: 8px;
+}
+
+.preview-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.img-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.clear-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: #ef4444;
+}
+
+/* --- PREDICTION & SUMMARY BOX --- */
+.prediction-box {
+  margin-top: 15px;
+  background: #f0fdf4; /* Light green background */
+  border-radius: 8px;
+  border: 1px solid #dcfce7;
+  overflow: hidden;
+  text-align: left;
+}
+
+.prediction-header {
+  padding: 12px;
+  border-bottom: 1px solid #dcfce7;
+}
+
+.pred-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #166534;
+  margin: 0 0 4px 0;
+}
+
+.prediction-header h4 {
+  margin: 0;
+  color: #14532d;
+  font-size: 1.1rem;
+}
+
+.pred-meta {
+  font-size: 0.75rem;
+  color: #15803d;
+  margin: 2px 0 0 0;
+}
+
+.landmark-summary {
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  display: flex;
+  gap: 10px;
+}
+
+.landmark-summary .material-symbols-outlined {
+  font-size: 18px;
+  color: #15803d;
+  flex-shrink: 0;
+}
+
+.landmark-summary p {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #166534;
+  margin: 0;
+}
+
+/* --- BUTTON STATE --- */
+.primary-btn:disabled {
+  background-color: #cbd5e1;
+  cursor: not-allowed;
+  transform: none;
+}

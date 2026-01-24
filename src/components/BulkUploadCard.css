@@ -1,0 +1,48 @@
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+}
+
+.file-input-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  color: #666;
+  transition: border-color 0.3s;
+}
+
+.file-input-label:hover {
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.file-count {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 5px;
+}
+
+.secondary-btn {
+  background: #4caf50;
+  /* Green for training/upload */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.secondary-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
