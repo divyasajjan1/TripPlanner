@@ -61,7 +61,7 @@ export default function BulkUploadCard() {
     <div className="card">
       <div className="card-header">
         <span className="material-symbols-outlined">upload_file</span>
-        <h3>Model Training Data</h3>
+        <h3>Bulk Upload Training Data</h3>
       </div>
       <div className="card-body">
         <p className="card-description">Upload images to expand the dataset.</p>

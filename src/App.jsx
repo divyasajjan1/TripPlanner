@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import ScraperCard from './components/ScraperCard';
@@ -9,8 +9,7 @@ import DistanceCostCard from './components/DistanceCostCard';
 import BestDealsCard from './components/BestDealsCard';
 
 function App() {
-  const [scraperUrl, setScraperUrl] = React.useState('');
-  const [selectedFiles, setSelectedFiles] = React.useState([]);
+  const [prediction, setPrediction] = useState(null);
   return (
     <div className="dashboard">
       <Header />
@@ -20,8 +19,8 @@ function App() {
           <ScraperCard />     {/* Card 1: URL Scraper */}
           <BulkUploadCard />  {/* Card 2: Bulk Upload */}
           <TrainingCard />    {/* Card 3: Training Control */}
-          <UploadSelfie />    {/* Card 4: Upload a selfie */}
-          <DistanceCostCard />{/* Card 5: Distance & Cost */}
+          <UploadSelfie setPrediction={setPrediction} prediction={prediction} />    {/* Card 4: Upload a selfie */}
+          <DistanceCostCard prediction={prediction} setPrediction={setPrediction} /> {/* Card 5: Distance & Cost */}
           <BestDealsCard />   {/* Card 6: Best Deals */}
         </div>
       </main>

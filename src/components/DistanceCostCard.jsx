@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './DistanceCostCard.css';
 
-export default function DistanceCostCard() {
+export default function DistanceCostCard({ prediction, setPrediction }) {
   const [origin, setOrigin] = useState("New York, USA");
   const [isLocating, setIsLocating] = useState(false);
 
@@ -28,6 +28,37 @@ export default function DistanceCostCard() {
     );
   };
 
+  const handleCalculate = async () => {
+  // If no landmark has been identified in Card 4 yet, we can't calculate distance
+    if (!prediction || !prediction.name) {
+      alert("Please upload a photo in 'Upload Selfie' section first!");
+      return;
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:8080/api/recalculate/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          landmark_name: prediction.name, // From shared state
+          origin_city: origin // From local input state
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        // 3. Update the SHARED state so both cards see the new distance/cost
+        setPrediction({
+          ...prediction,
+          distance_km: data.distance_km,
+          estimated_cost: data.estimated_cost
+        });
+      }
+    } catch (err) {
+      console.error("Calculation error:", err);
+    }
+  };
+
   return (
     <div className="card">
       <div className="card-header">
@@ -42,8 +73,11 @@ export default function DistanceCostCard() {
               type="text" 
               value={origin} 
               onChange={(e) => setOrigin(e.target.value)}
-              placeholder="Enter city..."
+              onKeyDown={(e) => e.key === 'Enter' && handleCalculate()} 
+              placeholder="Enter city, country..."
             />
+            
+            {/* Button 1: The Auto-Locate Icon */}
             <button 
               className="icon-btn" 
               onClick={handleAutoLocate} 
@@ -52,6 +86,11 @@ export default function DistanceCostCard() {
               <span className={`material-symbols-outlined ${isLocating ? 'spinning' : ''}`}>
                 my_location
               </span>
+            </button>
+
+            {/* Button 2: The Update Route Text Button */}
+            <button className="calculate-btn" onClick={handleCalculate}>
+              Update
             </button>
           </div>
         </div>
@@ -64,12 +103,27 @@ export default function DistanceCostCard() {
 
         <div className="stats-grid">
           <div className="stat-item">
-            <label>Distance</label>
-            <p>6,892 km</p>
+            <div className="stat-header">
+              <span className="material-symbols-outlined">straighten</span>
+              <label>Distance</label>
+            </div>
+            <p className="stat-value">
+              {prediction?.distance_km ? `${prediction.distance_km} km` : "---"}
+            </p>
+            {/* Sub-label to clarify the origin */}
+            <span className="stat-meta">From your current location</span>
           </div>
           <div className="stat-item highlight">
-            <label>Est. Cost</label>
-            <p>$1,150</p>
+            <label>
+              Est. Travel Cost
+              <div className="tooltip-container">
+                <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>info</span>
+                <span className="tooltip-text">
+                  Estimated 2026 airfare based on a global average of $0.12/km. Includes base taxes and fees.
+                </span>
+              </div>
+            </label>
+            <p>${prediction?.estimated_cost || "---"}</p>
           </div>
         </div>
       </div>

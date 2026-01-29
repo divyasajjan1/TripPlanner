@@ -1,30 +1,59 @@
 import React, { useState } from 'react';
 import './UploadSelfieCard.css';
 
-export default function UploadSelfie() {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [prediction, setPrediction] = useState(null);
+export default function UploadSelfie({ prediction, setPrediction }) {
+  const [fileObject, setFileObject] = useState(null); // The real file for the API
+  const [previewUrl, setPreviewUrl] = useState(null); // The URL for the UI
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file));
+      // If a previous preview exists, revoke it to save memory
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      
+      setFileObject(file);
+      setPreviewUrl(URL.createObjectURL(file));
       setPrediction(null);
     }
   };
 
-  const identifyLandmark = () => {
+  const identifyLandmark = async () => {
+    if (!fileObject) return;
+
     setIsAnalyzing(true);
-    setTimeout(() => {
-      setPrediction({
-        name: "Colosseum",
-        location: "Rome, Italy",
-        confidence: "97.8%",
-        summary: "An iconic amphitheatre in the centre of the city of Rome, Italy. It was the largest amphitheatre ever built at the time."
+    const formData = new FormData();
+    formData.append('file', fileObject);
+
+    try {
+      const response = await fetch('http://127.0.0.1:8080/api/predict/', {
+        method: 'POST',
+        body: formData,
+        // Don't set Content-Type header; fetch sets it automatically for FormData
       });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // data is the LandmarkPrediction object from LandmarkPredictionSerializer
+        const landmark = data.predicted_landmark; 
+        
+        setPrediction({
+          name: landmark.name.replace(/_/g, ' ').toUpperCase(),
+          // Access latitude and longitude from the nested landmark object
+          location: `Lat: ${parseFloat(landmark.latitude).toFixed(2)}, Lon: ${parseFloat(landmark.longitude).toFixed(2)}`,
+          confidence: `${(parseFloat(data.confidence) * 100).toFixed(1)}% confident`,
+          summary: data.summary || "No summary available."
+        });
+      } else {
+        alert(data.error || "Analysis failed.");
+      }
+    } catch (err) {
+      console.error("Prediction error:", err);
+      alert("Network error: Could not reach the backend.");
+    } finally {
       setIsAnalyzing(false);
-    }, 2000);
+    }
   };
 
   return (
@@ -37,16 +66,17 @@ export default function UploadSelfie() {
       <div className="card-body">
         <p className="card-description">Upload your photo to identify the landmark.</p>
         
-        {/* THE UPLOAD ZONE */}
         <div className="upload-zone">
-          {selectedImage ? (
+          {previewUrl ? (
             <div className="preview-box">
-              <img src={selectedImage} alt="Preview" className="img-preview" />
+              <img src={previewUrl} alt="Preview" className="img-preview" />
               <button 
                 className="clear-btn" 
                 onClick={() => {
-                  setSelectedImage(null); // Removes the preview image
-                  setPrediction(null);    // Hides the summary box
+                  URL.revokeObjectURL(previewUrl);
+                  setFileObject(null);
+                  setPreviewUrl(null);
+                  setPrediction(null);
                 }}
               >
                 <span className="material-symbols-outlined">close</span>
@@ -61,16 +91,14 @@ export default function UploadSelfie() {
           )}
         </div>
 
-        {/* THE ACTION BUTTON */}
         <button 
           className="primary-btn" 
           onClick={identifyLandmark} 
-          disabled={!selectedImage || isAnalyzing}
+          disabled={!fileObject || isAnalyzing}
         >
           {isAnalyzing ? "Analyzing..." : "Identify Landmark"}
         </button>
 
-        {/* THE PREDICTION & SUMMARY BOX */}
         {prediction && (
           <div className="prediction-box">
             <div className="prediction-header">

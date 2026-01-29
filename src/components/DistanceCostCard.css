@@ -65,6 +65,7 @@
   padding: 4px;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
+  align-items: center;
 }
 
 .input-with-action input {
@@ -122,4 +123,35 @@
 .spinning {
   animation: spin 1s linear infinite;
   color: #94a3b8;
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  margin-left: 5px;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position above the icon */
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
 }
