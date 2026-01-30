@@ -36,7 +36,7 @@ export default function DistanceCostCard({ prediction, setPrediction }) {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8080/api/recalculate/', {
+      const response = await fetch('http://127.0.0.1:8080/api/distance/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -119,7 +119,7 @@ export default function DistanceCostCard({ prediction, setPrediction }) {
               <div className="tooltip-container">
                 <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>info</span>
                 <span className="tooltip-text">
-                  Estimated 2026 airfare based on a global average of $0.12/km. Includes base taxes and fees.
+                  Estimated 2026 airfare based on a global average of $0.15/km. Includes base taxes and fees.
                 </span>
               </div>
             </label>

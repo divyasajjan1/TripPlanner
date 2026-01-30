@@ -35,14 +35,14 @@ export default function UploadSelfie({ prediction, setPrediction }) {
       const data = await response.json();
 
       if (response.ok) {
-        // data is the LandmarkPrediction object from LandmarkPredictionSerializer
-        const landmark = data.predicted_landmark; 
         
         setPrediction({
-          name: landmark.name.replace(/_/g, ' ').toUpperCase(),
-          // Access latitude and longitude from the nested landmark object
-          location: `Lat: ${parseFloat(landmark.latitude).toFixed(2)}, Lon: ${parseFloat(landmark.longitude).toFixed(2)}`,
+          // Formatting the name here (e.g., "eiffel_tower" -> "EIFFEL TOWER")
+          name: data.name.replace(/_/g, ' ').toUpperCase(),
+          location: `Lat: ${parseFloat(data.latitude).toFixed(2)}, Lon: ${parseFloat(data.longitude).toFixed(2)}`,
+          
           confidence: `${(parseFloat(data.confidence) * 100).toFixed(1)}% confident`,
+          
           summary: data.summary || "No summary available."
         });
       } else {
@@ -60,7 +60,7 @@ export default function UploadSelfie({ prediction, setPrediction }) {
     <div className="card">
       <div className="card-header">
         <span className="material-symbols-outlined">face</span>
-        <h3>Upload Selfie</h3>
+        <h3>Upload Photo</h3>
       </div>
       
       <div className="card-body">
