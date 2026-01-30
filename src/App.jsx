@@ -7,6 +7,7 @@ import TrainingCard from './components/TrainingCard';
 import UploadSelfie from './components/UploadSelfieCard';
 import DistanceCostCard from './components/DistanceCostCard';
 import BestDealsCard from './components/BestDealsCard';
+import ChatWidget from './components/ChatWidget';
 
 function App() {
   const [prediction, setPrediction] = useState(null);
@@ -24,7 +25,7 @@ function App() {
           <BestDealsCard />   {/* Card 6: Best Deals */}
         </div>
       </main>
-
+      <ChatWidget /> {/* Chat Widget */}
       <footer className="footer">
         <p>&copy; {new Date().getFullYear()} Trip Planner. All rights reserved.</p>
       </footer>
