@@ -28,15 +28,21 @@ export default function BulkUploadCard() {
     setMessage('');
     setError('');
 
+    const sanitizedName = landmarkName.trim().toLowerCase().replace(/\s/g, '_');
+
     const formData = new FormData();
-    formData.append('landmark_name', landmarkName);
+    formData.append('landmark_name', sanitizedName);
+    
     files.forEach((file, index) => {
+      // Your backend logic "if key.startswith('file')" will catch these
       formData.append(`file[${index}]`, file);
     });
 
     try {
       const response = await fetch('http://127.0.0.1:8080/api/bulk-upload/', {
         method: 'POST',
+        // Note: Don't set Content-Type header manually when sending FormData, 
+        // the browser needs to set the boundary automatically.
         body: formData,
       });
 
@@ -44,9 +50,11 @@ export default function BulkUploadCard() {
 
       if (response.ok) {
         setMessage(data.message);
-        setFiles([]); // Clear selected files on success
+        setFiles([]); 
         setLandmarkName('');
+        // Optional: Reset the actual HTML input if you use a ref
       } else {
+        // This will now catch the "Landmark not found in database" error
         setError(data.error || 'An error occurred during upload.');
       }
     } catch (err) {

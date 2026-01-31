@@ -29,24 +29,25 @@ export default function UploadSelfie({ prediction, setPrediction }) {
       const response = await fetch('http://127.0.0.1:8080/api/predict/', {
         method: 'POST',
         body: formData,
-        // Don't set Content-Type header; fetch sets it automatically for FormData
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        
+        console.log("Full Data Received:", data);
+
         setPrediction({
-          // Formatting the name here (e.g., "eiffel_tower" -> "EIFFEL TOWER")
-          name: data.name.replace(/_/g, ' ').toUpperCase(),
+          name: data.name ? data.name.replace(/_/g, ' ').toUpperCase() : "UNKNOWN",
           location: `Lat: ${parseFloat(data.latitude).toFixed(2)}, Lon: ${parseFloat(data.longitude).toFixed(2)}`,
           
-          confidence: `${(parseFloat(data.confidence) * 100).toFixed(1)}% confident`,
+          // Check if confidence is in data, otherwise default to 100% or N/A
+          confidence: data.confidence 
+            ? `${(parseFloat(data.confidence) * 100).toFixed(1)}% confident` 
+            : "Confidence N/A",
           
-          summary: data.summary || "No summary available."
+          // Use summary or summary_at_prediction depending on what's in the log
+          summary: data.summary || data.summary_at_prediction || "No summary available."
         });
-      } else {
-        alert(data.error || "Analysis failed.");
       }
     } catch (err) {
       console.error("Prediction error:", err);

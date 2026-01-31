@@ -46,3 +46,60 @@
   background: #ccc;
   cursor: not-allowed;
 }
+
+.metrics-list.new {
+  color: #2e7d32; /* Deep Green for fresh results */
+}
+
+.metrics-list.historical {
+  color: #1976d2; /* Professional Blue for older results */
+}
+
+.metrics-list.historical .metrics-header {
+  color: #333; /* Dark/Black for the header of old results */
+}
+
+.metrics-header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.metrics-list {
+  list-style: none;
+  padding: 0;
+  font-size: 0.9rem;
+  color: #2e7d32; /* A nice green */
+}
+
+.metrics-list li {
+  margin-bottom: 5px;
+}
+
+.training-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.note-text {
+  color: #e67e22;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.spinning-icon {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Dynamic button states */
+.primary-btn.training {
+  background-color: #ffa000 !important;
+}

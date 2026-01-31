@@ -4,17 +4,18 @@ import './ScraperCard.css';
 export default function ScraperCard() {
   const [url, setUrl] = useState('');
   const [landmarkName, setLandmarkName] = useState('');
-  const [scrapedCount, setScrapedCount] = useState(0);
+  const [isScraping, setIsScraping] = useState(false); // NEW: Loading state
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
   const handleScrape = async () => {
     setError('');
     setMessage('');
-    setScrapedCount(0);
+    setIsScraping(true); // Start loading
 
     if (!landmarkName) {
       setError('Please enter a landmark name.');
+      setIsScraping(false);
       return;
     }
 
@@ -24,20 +25,26 @@ export default function ScraperCard() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ landmark_name: landmarkName.toLowerCase().replace(/\s/g, '_'), search_query: url }),
+        // We send the name as is, or lowercase. 
+        // TIP: Ensure this matches a 'name' already in your Landmark table!
+        body: JSON.stringify({ 
+          landmark_name: landmarkName.trim().toLowerCase().replace(/\s/g, '_'), 
+          search_query: url 
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setScrapedCount(data.scraped_count);
         setMessage(data.message);
       } else {
+        // If the landmark doesn't exist in DB, the backend will return 404
         setError(data.error || 'An error occurred during scraping.');
       }
     } catch (err) {
       setError('Network error or unable to connect to the backend.');
-      console.error('Scraping error:', err);
+    } finally {
+      setIsScraping(false); // Stop loading regardless of success/fail
     }
   };
 
@@ -48,29 +55,38 @@ export default function ScraperCard() {
         <h3>Scrape Landmark Data</h3>
       </div>
       <div className="card-body">
-        <p className="card-description">Enter a landmark name and an optional search query (URL).</p>
+        <p className="card-description">Target a landmark already in your database to fetch training images.</p>
+        
         <div className="input-group">
           <input 
             type="text" 
-            placeholder="Landmark Name (e.g., eiffel_tower)" 
+            placeholder="Landmark ID Name (e.g., eiffel_tower)" 
             value={landmarkName}
             onChange={(e) => setLandmarkName(e.target.value)}
+            disabled={isScraping} // Disable during work
           />
         </div>
+
         <div className="input-group">
           <input 
             type="text" 
-            placeholder="URL (e.g., https://example.com) or Search Keywords (optional)" 
+            placeholder="Optional: Specific URL or Search Query" 
             value={url}
             onChange={(e) => setUrl(e.target.value)}
+            disabled={isScraping}
           />
-          <button className="primary-btn" onClick={handleScrape}>
-            Scrape Data
+          <button 
+            className="primary-btn" 
+            onClick={handleScrape}
+            disabled={isScraping} // Prevent double-clicks
+          >
+            {isScraping ? 'Scraping...' : 'Scrape Data'}
           </button>
         </div>
-        {error && <p className="error-message">Error: {error}</p>}
-        {message && <p className="success-message">{message}</p>}
 
+        {isScraping && <div className="loader">This may take a minute...</div>}
+        {error && <p className="error-message">{error}</p>}
+        {message && <p className="success-message">{message}</p>}
       </div>
     </div>
   );

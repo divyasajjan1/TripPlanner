@@ -29,33 +29,39 @@ export default function DistanceCostCard({ prediction, setPrediction }) {
   };
 
   const handleCalculate = async () => {
-  // If no landmark has been identified in Card 4 yet, we can't calculate distance
+    // If no landmark has been identified in Card 4 yet, we can't calculate distance
     if (!prediction || !prediction.name) {
       alert("Please upload a photo in 'Upload Selfie' section first!");
       return;
     }
+
+    // SANITIZATION: Convert "EIFFEL TOWER" back to "eiffel_tower" for the backend
+    const sanitizedLandmarkName = prediction.name.trim().toLowerCase().replace(/\s/g, '_');
 
     try {
       const response = await fetch('http://127.0.0.1:8080/api/distance/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          landmark_name: prediction.name, // From shared state
-          origin_city: origin // From local input state
+          landmark_name: sanitizedLandmarkName, 
+          origin_city: origin 
         }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        // 3. Update the SHARED state so both cards see the new distance/cost
+        // Update the SHARED state
         setPrediction({
           ...prediction,
           distance_km: data.distance_km,
           estimated_cost: data.estimated_cost
         });
+      } else {
+        alert(data.error || "Could not calculate distance.");
       }
     } catch (err) {
       console.error("Calculation error:", err);
+      alert("Network error: Could not reach the distance service.");
     }
   };
 
