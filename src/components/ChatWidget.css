@@ -1,0 +1,94 @@
+.chat-widget-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.chat-window {
+  width: 320px;
+  height: 450px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.chat-header {
+  background-color: #1976d2; /* MUI primary.main default */
+  color: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-messages-area {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+}
+
+.message-row {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.message-row.bot {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  padding: 12px;
+  max-width: 80%;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+}
+
+.message-bubble.user {
+  background-color: #1565c0; /* Darker blue for better contrast */
+  color: white;
+}
+
+.message-bubble.user p, 
+.message-bubble.user span {
+  color: #ffffff !important;
+}
+
+.message-bubble.bot {
+  background-color: white;
+  color: black;
+  border: 1px solid #e0e0e0;
+}
+
+.chat-input-area {
+  padding: 12px;
+  display: flex;
+  border-top: 1px solid #ddd;
+  background-color: white;
+  align-items: center;
+}
+
+/* Header Title */
+.chat-header-title {
+  font-size: 1rem !important;
+  font-weight: bold !important;
+  margin: 0 !important;
+}
+
+/* Close Button and Send Button Icons */
+.white-icon {
+  color: white !important;
+}
+
+.send-btn {
+  margin-left: 8px !important;
+}
