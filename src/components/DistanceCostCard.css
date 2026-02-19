@@ -66,13 +66,15 @@
   border-radius: 8px;
   border: 1px solid #e2e8f0;
   align-items: center;
+  width: 100%;
 }
 
 .input-with-action input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
-  padding: 8px;
+  padding: 8px 4px;
   font-size: 0.9rem;
   outline: none;
 }
@@ -86,7 +88,14 @@
   justify-content: center;
   cursor: pointer;
   color: #1976d2;
-  padding: 4px;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.icon-btn .material-symbols-outlined {
+  font-size: 20px;
 }
 
 .route-visual {
@@ -154,4 +163,22 @@
 .tooltip-container:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+.calculate-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 70px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
