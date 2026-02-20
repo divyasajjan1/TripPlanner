@@ -1,15 +1,26 @@
 .card-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 1rem;
-  color: #1976d2;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+  /* color: #1976d2; */
+}
+
+.icon-container {
+  background: #eef2ff; /* Pale Indigo */
+  color: #6366f1;     /* Indigo */
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-header h3 {
   margin: 0;
   font-size: 1.1rem;
-  color: #333;
+  color: #0f172a;
+  font-weight: 700;
 }
 
 .card-description {
@@ -18,48 +29,30 @@
   margin-bottom: 1.5rem;
 }
 
-.success-message {
-  color: #28a745; /* Green for success */
-  font-weight: 500;
-  margin-top: 10px;
-}
-
-.error-message {
-  color: #dc3545; /* Red for error */
-  font-weight: 500;
-  margin-top: 10px;
-}
-
-.input-group {
+.input-field {
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 
-.input-group input {
-  padding: 10px 14px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  outline: none;
+.input-field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
 }
 
-.input-group input:focus {
-  border-color: #1976d2;
-}
-
-.primary-btn {
-  background: #1976d2;
-  color: white;
-  border: none;
+.input-field input {
   padding: 10px;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+  transition: all 0.2s;
 }
 
-.primary-btn:hover {
-  background: #1565c0;
+.input-field input:focus {
+  border-color: #6366f1;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
-

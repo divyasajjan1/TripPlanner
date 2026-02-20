@@ -1,72 +1,95 @@
-/* Distance and cost card styles */
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 15px;
+.route-icon {
+  background: #e0f2fe; /* Light Sky */
+  color: #0284c7;     /* Sky Blue */
 }
 
-.stat-item {
+/* Polished Route Visual */
+.route-visual {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+  padding: 0 10px;
+  color: #94a3b8;
+}
+
+.line-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 15px;
+}
+
+.route-visual .line {
+  width: 100%;
+  height: 2px;
+  border-top: 2px dashed #cbd5e1;
+}
+
+.plane-icon {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px !important;
+  background: white;
+  padding: 0 5px;
+  color: #0284c7;
+}
+
+.dest-icon { color: #ef4444; }
+
+/* Statistics Styling */
+.stat-tile {
   background: #f8fafc;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #f1f5f9;
 }
 
-.stat-item label {
-  display: block;
+.stat-tile label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 0.7rem;
+  font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
-  margin-bottom: 4px;
 }
 
-.stat-item p {
-  margin: 0;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: #1e293b;
+.stat-tile p {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 4px;
 }
 
-.stat-item.highlight {
-  background: #fff7ed;
-  border: 1px solid #ffedd5;
+.stat-tile.highlight-amber {
+  background: #fffbeb;
+  border-color: #fef3c7;
   grid-column: span 2;
 }
 
-.stat-item.highlight p {
-  color: #c2410c;
-}
+.stat-tile.highlight-amber p { color: #b45309; }
 
-.outline-btn {
-  background: white !important;
-  color: #1976d2 !important;
-  border: 1px solid #1976d2 !important;
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.location-input-group {
-  margin-bottom: 20px;
-}
-
-.small-label {
-  display: block;
-  font-size: 0.75rem;
-  color: #777;
-  margin-bottom: 5px;
+.update-btn {
+  padding: 6px 12px !important;
+  height: 34px !important;
+  font-size: 0.8rem !important;
+  white-space: nowrap; /* Keeps "Update" on one line */
+  flex-shrink: 0;
 }
 
 .input-with-action {
   display: flex;
   gap: 8px;
-  background: #f1f5f9;
-  padding: 4px;
-  border-radius: 8px;
+  background: #f1f5f9; /* Soft grey-blue background */
+  padding: 6px 10px;
+  border-radius: 10px;
   border: 1px solid #e2e8f0;
   align-items: center;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .input-with-action input {
@@ -74,111 +97,48 @@
   min-width: 0;
   background: transparent;
   border: none;
-  padding: 8px 4px;
-  font-size: 0.9rem;
-  outline: none;
-}
-
-.icon-btn {
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #1976d2;
-  padding: 0;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-}
-
-.icon-btn .material-symbols-outlined {
-  font-size: 20px;
-}
-
-.route-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 15px 0;
-}
-
-.route-visual .line {
-  flex: 1;
-  height: 2px;
-  border-top: 2px dotted #cbd5e1;
-  margin: 0 10px;
-}
-
-.route-visual .dot {
-  width: 8px;
-  height: 8px;
-  background: #cbd5e1;
-  border-radius: 50%;
-}
-
-.route-visual .dot.destination { 
-  background: #ef4444; 
-}
-
-/* Animation for the 'Locate' button */
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.spinning {
-  animation: spin 1s linear infinite;
-  color: #94a3b8;
-}
-
-.tooltip-container {
-  position: relative;
-  display: inline-block;
-  cursor: help;
-  margin-left: 5px;
-}
-
-.tooltip-text {
-  visibility: hidden;
-  width: 200px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
   padding: 8px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%; /* Position above the icon */
-  left: 50%;
-  margin-left: -100px;
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 0.75rem;
-  line-height: 1.2;
+  font-size: 0.85rem;
+  outline: none;
+  /* FORCE VISIBILITY HERE */
+  color: #1e293b !important; /* Deep slate grey text */
 }
 
-.tooltip-container:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
+.input-with-action input::placeholder {
+  color: #94a3b8; /* Muted grey for placeholder */
 }
 
-.calculate-btn {
-  background: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
+.icon-btn-ghost {
   flex-shrink: 0;
-  min-width: 70px;
-  height: 36px;
+  /* Ensure this button isn't taking up too much room */
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 400px) {
+  .input-with-action {
+    flex-direction: column;
+    align-items: stretch;
+    background: transparent;
+    border: none;
+    padding: 0;
+    gap: 10px;
+  }
+
+  .input-with-action input {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px;
+  }
+
+  .input-with-action .icon-btn-ghost,
+  .input-with-action .update-btn {
+    width: 100%;
+    height: 40px;
+    justify-content: center;
+  }
 }

@@ -68,44 +68,42 @@ export default function BulkUploadCard() {
   return (
     <div className="card">
       <div className="card-header">
-        <span className="material-symbols-outlined">upload_file</span>
+        <div className="icon-container upload-icon">
+          <span className="material-symbols-outlined">upload_file</span>
+        </div>
         <h3>Bulk Upload Training Data</h3>
       </div>
       <div className="card-body">
-        <p className="card-description">Upload images to expand the dataset.</p>
-        <div className="input-group" style={{ marginBottom: '15px' }}>
+        <p className="card-description">Upload multiple images to expand your dataset.</p>
+        <div className="input-field">
+          <label>Target Landmark</label>
           <input 
             type="text" 
-            placeholder="Landmark Name (e.g., eiffel_tower)" 
+            placeholder="e.g., eiffel_tower" 
             value={landmarkName}
             onChange={(e) => setLandmarkName(e.target.value)}
           />
         </div>
         <div className="upload-section">
-          <label className="file-input-label">
+          <label className={`file-input-area ${files.length > 0 ? 'has-files' : ''}`}>
             <span className="material-symbols-outlined">add_photo_alternate</span>
-            Choose Images
-            <input 
-              type="file" 
-              multiple 
-              onChange={handleFileChange} 
-              hidden 
-              accept="image/*"
-            />
+            <span className="upload-text">
+              {files.length > 0 ? `${files.length} Images Selected` : "Drop images here or Click to browse"}
+            </span>
+            <input type="file" multiple onChange={handleFileChange} hidden accept="image/*" />
           </label>
-          <div className="file-count">
-            {files.length > 0 ? `${files.length} files selected` : "No files chosen"}
-          </div>
+        
           <button 
-            className="secondary-btn" 
+            className="primary-btn upload-btn" 
             onClick={handleBulkUpload} 
             disabled={files.length === 0 || isUploading || !landmarkName}
           >
-            {isUploading ? 'Uploading...' : 'Bulk Upload'}
+            {isUploading ? 'Processing...' : 'Start Bulk Upload'}
           </button>
         </div>
-        {error && <p className="error-message">Error: {error}</p>}
-        {message && <p className="success-message">{message}</p>}
+        
+        {error && <div className="status-box error">Error: {error}</div>}
+        {message && <div className="status-box success">{message}</div>}
       </div>
     </div>
   );

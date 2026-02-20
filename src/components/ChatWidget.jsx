@@ -71,7 +71,9 @@ const ChatWidget = () => {
             {messages.map((msg, i) => (
               <Box key={i} className={`message-row ${msg.sender}`}>
                 <Paper className={`message-bubble ${msg.sender}`}>
-                  <Typography variant="body2">{msg.text}</Typography>
+                  <Typography variant="body2" style={{ color: 'inherit' }}>
+                    {msg.text}
+                  </Typography>
                 </Paper>
               </Box>
             ))}
@@ -96,7 +98,11 @@ const ChatWidget = () => {
         </Paper>
       )}
 
-      <Fab color="primary" onClick={() => setIsOpen(!isOpen)}>
+      <Fab 
+        color="primary" 
+        onClick={() => setIsOpen(!isOpen)} 
+        className="chat-fab"
+      >
         {isOpen ? <CloseIcon /> : <ChatIcon />}
       </Fab>
     </Box>

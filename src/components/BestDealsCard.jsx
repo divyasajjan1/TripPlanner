@@ -3,37 +3,37 @@ import './BestDealsCard.css';
 
 export default function BestDealsCard() {
   const deals = [
-    { site: "Skyscanner", price: "$1,120", tag: "Cheapest", color: "#00d7f3" },
-    { site: "Wego", price: "$1,145", tag: "Fastest", color: "#ffc107" }
+    { name: 'Expedia', price: 450, color: '#003580', promo: 'Direct Flight' },
+    { name: 'Skyscanner', price: 432, color: '#00d1ff', promo: 'Cheapest' },
+    { name: 'Booking.com', price: 465, color: '#003580', promo: 'Refundable' },
   ];
 
   return (
     <div className="card">
       <div className="card-header">
-        <span className="material-symbols-outlined">local_offer</span>
-        <h3>Best Deals for Your Trip</h3>
+        <div className="icon-container deals-icon">
+          <span className="material-symbols-outlined">local_offer</span>
+        </div>
+        <h3>Best Flight Deals</h3>
       </div>
       <div className="card-body">
-        <p className="card-description">Compare prices from top travel engines.</p>
-        
         <div className="deals-list">
           {deals.map((deal, index) => (
-            <div key={index} className="deal-item" style={{ borderLeftColor: deal.color }}>
-              <div className="brand-info">
-                <strong>{deal.site}</strong>
-                <span className="promo-badge">{deal.tag}</span>
+            <div className="deal-row" key={index}>
+              <div className="deal-brand">
+                <span className="brand-dot" style={{ backgroundColor: deal.color }}></span>
+                <div className="brand-details">
+                  <span className="brand-name">{deal.name}</span>
+                  <span className="promo-tag">{deal.promo}</span>
+                </div>
               </div>
-              <div className="price-action">
-                <span className="deal-amount">{deal.price}</span>
-                <button className="view-deal-btn">View</button>
+              <div className="deal-price">
+                <span className="currency">$</span>
+                <span className="amount">{deal.price}</span>
+                <button className="view-btn">View</button>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="update-status">
-          <span className="material-symbols-outlined">sync</span>
-          <p>Updated 2 minutes ago</p>
         </div>
       </div>
     </div>

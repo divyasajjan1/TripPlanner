@@ -58,16 +58,18 @@ export default function UploadSelfie({ prediction, setPrediction }) {
   };
 
   return (
-    <div className="card">
+    <div className="card hero-card">
       <div className="card-header">
-        <span className="material-symbols-outlined">face</span>
-        <h3>Upload Photo</h3>
+        <div className="icon-container selfie-icon">
+          <span className="material-symbols-outlined">face</span>
+        </div>
+        <h3>Identify Landmark</h3>
       </div>
       
       <div className="card-body">
-        <p className="card-description">Upload your photo to identify the landmark.</p>
+        <p className="card-description">Snapshot a landmark to get instant details and history.</p>
         
-        <div className="upload-zone">
+        <div className={`upload-zone ${previewUrl ? 'has-preview' : ''}`}>
           {previewUrl ? (
             <div className="preview-box">
               <img src={previewUrl} alt="Preview" className="img-preview" />
@@ -85,33 +87,35 @@ export default function UploadSelfie({ prediction, setPrediction }) {
             </div>
           ) : (
             <label className="upload-label">
-              <span className="material-symbols-outlined">add_a_photo</span>
-              <span>Click to Upload</span>
+              <div className="upload-circle">
+                <span className="material-symbols-outlined">add_a_photo</span>
+              </div>
+              <span>Click to Upload Photo</span>
               <input type="file" onChange={handleImageChange} hidden />
             </label>
           )}
         </div>
 
         <button 
-          className="primary-btn" 
+          className="primary-btn identify-btn" 
           onClick={identifyLandmark} 
           disabled={!fileObject || isAnalyzing}
         >
-          {isAnalyzing ? "Analyzing..." : "Identify Landmark"}
+          {isAnalyzing ? "Scanning..." : "Identify Landmark"}
         </button>
 
         {prediction && (
-          <div className="prediction-box">
-            <div className="prediction-header">
-              <div className="pred-info">
-                <p className="pred-label">Landmark Identified</p>
-                <h4>{prediction.name}</h4>
-                <p className="pred-meta">{prediction.location} • {prediction.confidence}</p>
+          <div className="prediction-results animate-in">
+            <div className="result-main">
+              <p className="result-label">Landmark Identified</p>
+              <h4>{prediction.name}</h4>
+              <div className="result-badge-row">
+                <span className="badge location">{prediction.location}</span>
+                <span className="badge confidence">{prediction.confidence}</span>
               </div>
             </div>
             
-            <div className="landmark-summary">
-              <span className="material-symbols-outlined">info</span>
+            <div className="result-description">
               <p>{prediction.summary}</p>
             </div>
           </div>

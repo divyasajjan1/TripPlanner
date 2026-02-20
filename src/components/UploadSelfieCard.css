@@ -1,121 +1,131 @@
-/* upload selfie card styles */
+.selfie-icon {
+  background: #f5f3ff; /* Pale Violet */
+  color: #7c3aed;     /* Violet */
+}
 
-/* --- UPLOAD ZONE & PREVIEW --- */
+/* Enhanced Upload Zone */
 .upload-zone {
   width: 100%;
-  height: 150px;
-  border: 2px dashed #cbd5e1;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 180px; /* Slightly taller */
   position: relative;
   overflow: hidden;
+  border: 2px dashed #ddd6fe;
+  border-radius: 12px;
   background: #f8fafc;
-  transition: border-color 0.3s ease;
+  margin-bottom: 20px;
 }
 
-.upload-zone:hover {
-  border-color: #1976d2;
-}
-
-.upload-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  color: #64748b;
-  gap: 8px;
-}
-
-.preview-box {
-  width: 100%;
-  height: 100%;
-  position: relative;
+.upload-zone.has-preview {
+  height: 220px; /* Force a consistent height when image is present */
+  border: none;
 }
 
 .img-preview {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* This crops the image to fill the box instead of overflowing */
+  border-radius: 12px;
+}
+
+.preview-box {
+  width: 100%;
+  height: 100%;
+  position: relative; /* Double protection for the anchor */
+}
+
+.upload-circle {
+  background: #ede9fe;
+  color: #7c3aed;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.identify-btn {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+/* Refined Results Box */
+.prediction-results {
+  margin-top: 15px;
+  max-height: 250px; 
+  overflow-y: auto;  
+  border-radius: 12px;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+.prediction-results::-webkit-scrollbar {
+  width: 6px;
+}
+.prediction-results::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.result-main {
+  padding: 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.result-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.result-badge-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.badge.location { background: #e0f2fe; color: #0369a1; }
+.badge.confidence { background: #f0fdf4; color: #166534; }
+
+.result-description {
+  padding: 16px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #334155;
 }
 
 .clear-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  position: absolute; /* Moves independent of the image */
+  top: 10px;          /* Distance from top */
+  right: 10px;        /* Distance from right */
+  z-index: 10;        /* Makes sure it sits on TOP of the image */
+  
+  background: rgba(15, 23, 42, 0.7); /* Dark semi-transparent background */
+  backdrop-filter: blur(4px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  color: #ef4444;
+  transition: all 0.2s ease;
 }
 
-/* --- PREDICTION & SUMMARY BOX --- */
-.prediction-box {
-  margin-top: 15px;
-  background: #f0fdf4; /* Light green background */
-  border-radius: 8px;
-  border: 1px solid #dcfce7;
-  overflow: hidden;
-  text-align: left;
-}
-
-.prediction-header {
-  padding: 12px;
-  border-bottom: 1px solid #dcfce7;
-}
-
-.pred-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #166534;
-  margin: 0 0 4px 0;
-}
-
-.prediction-header h4 {
-  margin: 0;
-  color: #14532d;
-  font-size: 1.1rem;
-}
-
-.pred-meta {
-  font-size: 0.75rem;
-  color: #15803d;
-  margin: 2px 0 0 0;
-}
-
-.landmark-summary {
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.4);
-  display: flex;
-  gap: 10px;
-}
-
-.landmark-summary .material-symbols-outlined {
-  font-size: 18px;
-  color: #15803d;
-  flex-shrink: 0;
-}
-
-.landmark-summary p {
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: #166534;
-  margin: 0;
-}
-
-/* --- BUTTON STATE --- */
-.primary-btn:disabled {
-  background-color: #cbd5e1;
-  cursor: not-allowed;
-  transform: none;
+.clear-btn:hover {
+  background: #ef4444; /* Turns red on hover */
+  transform: scale(1.1);
 }

@@ -80,16 +80,19 @@ export default function TrainingCard() {
   return (
     <div className="card">
       <div className="card-header">
-        <span className="material-symbols-outlined">analytics</span>
-        <h3>Model Training & Metrics</h3>
+        <div className="icon-container training-icon">
+          <span className="material-symbols-outlined">analytics</span>
+        </div>
+        <h3>Model Training</h3>
       </div>
       <div className="card-body">
-        <p className="card-description">Train the image classification model on specific landmark data.</p>
+        <p className="card-description">Fine-tune the classification model with specific landmark data.</p>
         
-        <div className="input-group mb-15">
+        <div className="input-field">
+          <label>Target Landmark</label>
           <input 
             type="text" 
-            placeholder="Landmark Name (e.g., eiffel_tower)" 
+            placeholder="e.g., eiffel_tower" 
             value={landmarkName}
             onChange={(e) => setLandmarkName(e.target.value)}
             disabled={isTraining}
@@ -97,40 +100,46 @@ export default function TrainingCard() {
         </div>
 
         <button 
-          className={`primary-btn ${isTraining ? 'training' : ''}`} 
+          className={`primary-btn training-btn ${isTraining ? 'is-active' : ''}`} 
           onClick={startTraining} 
           disabled={isTraining || !landmarkName}
         >
-          {isTraining ? 'Training in Progress...' : 'Start Training'}
+          {isTraining ? (
+            <><span className="material-symbols-outlined spinning">sync</span> Training...</>
+          ) : 'Initialize Training'}
         </button>
 
-        {error && <p className="error-message">Error: {error}</p>}
-
-        <div className="metrics-display mt-15">
+        <div className="metrics-container">
           {metrics ? (
-            <ul className={`metrics-list ${isHistorical ? 'historical' : 'new'}`}>
-              <li className="metrics-header">
-                <strong>{isHistorical ? "🕒 Most Recent Training Data" : "✨ New Training Result"}</strong>
-              </li>
-              <li><strong>Status:</strong> ✅ {metrics.status}</li>
-              <li><strong>Images Processed:</strong> {metrics.images}</li>
-              <li><strong>Epochs:</strong> {metrics.epochs}</li>
-              <li><strong>Accuracy:</strong> {metrics.accuracy}</li>
-              <li><strong>Loss:</strong> {metrics.loss}</li>
-            </ul>
-          ) : isTraining ? (
-            <div className="training-note">
-              <span className="material-symbols-outlined spinning-icon">sync</span>
-              <p className="note-text">
-                Note: Retraining will include all landmark data to maintain model accuracy.
-              </p>
+            <div className={`metrics-grid ${isHistorical ? 'historical' : 'fresh'}`}>
+              <div className="metrics-tag">
+                {isHistorical ? "🕒 Last Session" : "✨ Current Run"}
+              </div>
+              <div className="metric-tile">
+                <span>Accuracy</span>
+                <strong>{metrics.accuracy}</strong>
+              </div>
+              <div className="metric-tile">
+                <span>Loss</span>
+                <strong>{metrics.loss}</strong>
+              </div>
+              <div className="metric-tile">
+                <span>Images</span>
+                <strong>{metrics.images}</strong>
+              </div>
+              <div className="metric-tile">
+                <span>Epochs</span>
+                <strong>{metrics.epochs}</strong>
+              </div>
             </div>
           ) : (
-            <p className="card-description">
-              No training data available. Enter a landmark name and click start to begin.
-            </p>
+            <div className="training-placeholder">
+              <span className="material-symbols-outlined">info</span>
+              <p>No active training data. Ready to process.</p>
+            </div>
           )}
         </div>
+        {error && <div className="status-box error">{error}</div>}
       </div>
     </div>
   );
