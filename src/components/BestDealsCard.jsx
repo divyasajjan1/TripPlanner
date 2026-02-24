@@ -94,7 +94,11 @@ export default function BestDealsCard({ prediction, origin, coords, originCoords
 
         <div className="deals-list">
           {deals.length > 0 ? (
-            deals.map((deal, index) => {
+            <>
+            <p className="route-info">
+              ✈️ Showing flights from <strong>{deals[0].from_airport}</strong> → <strong>{deals[0].to_airport}</strong>
+            </p>
+            {deals.map((deal, index) => {
               const symbol = CURRENCY_SYMBOLS[deal.currency] ?? deal.currency;
               const duration = formatDuration(deal.duration_minutes);
               return (
@@ -109,11 +113,17 @@ export default function BestDealsCard({ prediction, origin, coords, originCoords
                   <div className="deal-price-section">
                     <span className="currency-symbol">{symbol}</span>
                     <span className="price-value">{parseFloat(deal.price).toFixed(2)}</span>
-                    <button className="book-btn">View</button>
+                    <button 
+                      className="book-btn"
+                      onClick={() => window.open(deal.booking_url, '_blank', 'noopener,noreferrer')}
+                    >
+                      View
+                    </button>
                   </div>
                 </div>
               );
-            })
+            })}
+            </>
           ) : (
             !loading && (
               <p className="placeholder-text">Click search to see real-time prices.</p>
