@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import './DistanceCostCard.css';
 
-export default function DistanceCostCard({ prediction, setPrediction }) {
-  const [origin, setOrigin] = useState("New York, USA");
+export default function DistanceCostCard({ 
+  prediction, 
+  setPrediction, 
+  origin, 
+  setOrigin, 
+  setDestinationCoords,
+  setOriginCoords
+}) {
   const [isLocating, setIsLocating] = useState(false);
 
   // Function to get real browser coordinates
@@ -15,10 +21,9 @@ export default function DistanceCostCard({ prediction, setPrediction }) {
     setIsLocating(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // In a real app, you'd use Reverse Geocoding (Google/OpenStreetMap API)
-        // to turn these coordinates into a city name.
         const { latitude, longitude } = position.coords;
         setOrigin(`Lat: ${latitude.toFixed(2)}, Lon: ${longitude.toFixed(2)}`);
+        setOriginCoords({ lat: latitude, lon: longitude });
         setIsLocating(false);
       },
       () => {
@@ -29,13 +34,11 @@ export default function DistanceCostCard({ prediction, setPrediction }) {
   };
 
   const handleCalculate = async () => {
-    // If no landmark has been identified in Card 4 yet, we can't calculate distance
     if (!prediction || !prediction.name) {
-      alert("Please upload a photo in 'Upload Selfie' section first!");
+      alert("Please upload a photo in 'Identify Landmark' section first!");
       return;
     }
 
-    // SANITIZATION: Convert "EIFFEL TOWER" back to "eiffel_tower" for the backend
     const sanitizedLandmarkName = prediction.name.trim().toLowerCase().replace(/\s/g, '_');
 
     try {
@@ -49,13 +52,22 @@ export default function DistanceCostCard({ prediction, setPrediction }) {
       });
 
       const data = await response.json();
+      
       if (response.ok) {
-        // Update the SHARED state
+        // Update distance/cost
         setPrediction({
           ...prediction,
           distance_km: data.distance_km,
           estimated_cost: data.estimated_cost
         });
+
+        if (data.lat && data.lon) {
+          setDestinationCoords({ lat: data.lat, lon: data.lon });
+          console.log("Coordinates sent to App state:", data.lat, data.lon);
+        }
+        if (data.origin_lat && data.origin_lon) {
+            setOriginCoords({ lat: data.origin_lat, lon: data.origin_lon });
+        }
       } else {
         alert(data.error || "Could not calculate distance.");
       }

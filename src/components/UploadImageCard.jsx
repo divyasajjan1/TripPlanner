@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './UploadSelfieCard.css';
+import './UploadImageCard.css';
 
-export default function UploadSelfie({ prediction, setPrediction }) {
+export default function UploadImage({ prediction, setPrediction }) {
   const [fileObject, setFileObject] = useState(null); // The real file for the API
   const [previewUrl, setPreviewUrl] = useState(null); // The URL for the UI
   const [isAnalyzing, setIsAnalyzing] = useState(false);
